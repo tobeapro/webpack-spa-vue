@@ -3,16 +3,14 @@ import Vue from 'vue';
 /** 兼容性库 for fetch */
 import 'whatwg-fetch';
 /** 兼容性库 promise */
-// import es6Promise from 'es6-promise';
+import "@babel/polyfill";
 
 import App from './App.vue';
 import router from './router';
-
+import '@/assets/global.css';
 
 
 Vue.config.productionTip = false;
-// es6Promise.polyfill();
-
 
 new Vue({
   router,

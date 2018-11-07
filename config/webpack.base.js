@@ -2,8 +2,9 @@ const path = require('path');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin'); //分离css
 module.exports = {
-    entry: path.resolve(__dirname,'../src/main.js'),
+    entry: ['@babel/polyfill',path.resolve(__dirname,'../src/main.js')],
     output: {
         filename: 'js/[name]-[hash].js',
         path: path.resolve(__dirname,'../dist')
@@ -12,12 +13,19 @@ module.exports = {
         rules:[
             { 
                 test:/\.css$/,
-                use:['style-loader','css-loader']
+                use: [
+                    process.env.NODE_ENV !== 'production'
+                      ? 'vue-style-loader'
+                      : MiniCssExtractPlugin.loader,    
+                      'css-loader'              
+                ]
             },
             {
                 test: /\.scss$/,
                 use: [
-                    'vue-style-loader',
+                    process.env.NODE_ENV !== 'production'
+                      ? 'vue-style-loader'
+                      : MiniCssExtractPlugin.loader,
                     'css-loader',
                     'sass-loader'
                 ],
@@ -35,23 +43,25 @@ module.exports = {
             {
                 test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
                 loader: 'file-loader',
-                options: {
-                    limit: 10000,
-                    name:'img/[name].[hash:7].[ext]'
+                options:{
+                    name:'img/[name]-[hash].[ext]'
                 }
             },
             {
                 test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
                 loader: 'file-loader',
-                options: {
-                    limit: 8000,
-                    name:'font/[name].[hash:7].[ext]'
+                options:{
+                    name:'font/[name]-[hash].[ext]'
                 }
             },
         ]
     },
     plugins: [
         new VueLoaderPlugin(),
+        new MiniCssExtractPlugin({
+            filename: "css/[name]-[hash].css",
+            chunkFilename: "[id].css"
+        }),
         new CopyWebpackPlugin([ 
             {
                 from: 'public/',
