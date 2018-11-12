@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin'); //分离css
 module.exports = {
-    entry: ['@babel/polyfill',path.resolve(__dirname,'../src/main.js')],
+    entry: [path.resolve(__dirname,'../src/main.js')],
     output: {
         filename: 'js/[name]-[hash].js',
         path: path.resolve(__dirname,'../dist')
