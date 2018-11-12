@@ -33,11 +33,11 @@ module.exports = {
             },
             { 
                 test:/\.vue$/,
-                use:'vue-loader'
+                use:['eslint-loader','vue-loader']
             },
             {
                 test: /\.js$/,
-                loader: ['babel-loader'],
+                loader: ['eslint-loader','babel-loader'],
                 exclude:[/node_modules/,/public/]
             },
             {
