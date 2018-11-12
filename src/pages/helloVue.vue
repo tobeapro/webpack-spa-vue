@@ -31,7 +31,7 @@
         }
     }
 </script>
-<style>
+<style lang="scss">
     img{
         font-size:0;
         max-width:300px;

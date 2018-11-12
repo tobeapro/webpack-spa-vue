@@ -13,19 +13,19 @@ module.exports = {
         rules:[
             { 
                 test:/\.css$/,
-                use: [
-                    process.env.NODE_ENV !== 'production'
-                      ? 'vue-style-loader'
-                      : MiniCssExtractPlugin.loader,    
-                      'css-loader'              
+                use:[
+                    {
+                        loader: MiniCssExtractPlugin.loader,
+                    },
+                    "css-loader"
                 ]
             },
             {
                 test: /\.scss$/,
                 use: [
-                    process.env.NODE_ENV !== 'production'
-                      ? 'vue-style-loader'
-                      : MiniCssExtractPlugin.loader,
+                    {
+                        loader: MiniCssExtractPlugin.loader,
+                    },
                     'css-loader',
                     'sass-loader'
                 ],
@@ -60,7 +60,7 @@ module.exports = {
         new VueLoaderPlugin(),
         new MiniCssExtractPlugin({
             filename: "css/[name]-[hash].css",
-            chunkFilename: "[id].css"
+            chunkFilename: "css/[id]-[hash].css"
         }),
         new CopyWebpackPlugin([ 
             {
